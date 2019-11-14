@@ -80,8 +80,8 @@ HTML;
   <input type="text" value="" name="email"  placeholder="Ihre Email-Adresse"> <br/><br/>
   <input type="text" value="" name="vorname"  placeholder="Vorname"> <br/><br/>
   <input type="text" value="" name="nachname"  placeholder="Nachname"> <br/><br/>
-  <input type="text" value="" name="plz"  placeholder="PLZ"> <br/><br/>
-  <input type="text" value="" name="stadt"  placeholder="Stadt"> <br/><br/>
+  <input type="text"  name="addresse"  placeholder="Addresse"> <br/><br/>
+  <!-- <input type="text" value="" name="stadt"  placeholder="Stadt"> <br/><br/> -->
 <input type="button" name="delete choice " value="Eingabe Löschen">
 <input type="submit" name="order" value="Bestellen">
 </form>
@@ -92,7 +92,19 @@ HTML;
     
     protected function processReceivedData() 
     {
-        parent::processReceivedData();
+        if(isset($_POST['addresse']) ){ 
+            $addresse = $_POST['addresse'];
+            $timestamp = date("Y-m-d H:i:s");
+        }else{
+            echo 'not set';
+        }
+        // $year = isset($_POST['year']) ? $_POST['year'] : '';
+        $sql = "INSERT INTO bestellung (BestellungID,Addresse, Bestellzeitpunkt) VALUES ('','$addresse','$timestamp' )";
+        if(mysqli_query($this->_database, $sql)){
+            echo "insert successful";
+        }else{
+            echo 'insert failed';
+        }
     }
 
     public static function main() 
