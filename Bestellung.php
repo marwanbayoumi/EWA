@@ -95,16 +95,18 @@ HTML;
         if(isset($_POST['addresse']) ){ 
             $addresse = $_POST['addresse'];
             $timestamp = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO bestellung (BestellungID,Addresse, Bestellzeitpunkt) VALUES ('','$addresse','$timestamp' )";
+            mysqli_query($this->_database, $sql);
+            // if(mysqli_query($this->_database, $sql)){
+            //     echo "insert successful";
+            // }else{
+            //     echo 'insert failed';
+        // }
         }else{
             echo 'not set';
         }
         // $year = isset($_POST['year']) ? $_POST['year'] : '';
-        $sql = "INSERT INTO bestellung (BestellungID,Addresse, Bestellzeitpunkt) VALUES ('','$addresse','$timestamp' )";
-        if(mysqli_query($this->_database, $sql)){
-            echo "insert successful";
-        }else{
-            echo 'insert failed';
-        }
+        
     }
 
     public static function main() 
