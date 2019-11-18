@@ -62,7 +62,7 @@ class Bestellung extends Page
      
             //echo $field1name. " " . $field2name. " " . $field3name. " " . $field4name . '<br><br>';
             echo <<<HTML
-            <div >
+         <div >
             <figure> 
 HTML;
           echo  '<img class="pizzaImage" src="'.$field3name.'"> <br/>';
@@ -97,14 +97,16 @@ HTML;
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO bestellung (BestellungID,Addresse, Bestellzeitpunkt) VALUES ('','$addresse','$timestamp' )";
             mysqli_query($this->_database, $sql);
+            header('Location: Bestellung.php');
             // if(mysqli_query($this->_database, $sql)){
             //     echo "insert successful";
             // }else{
             //     echo 'insert failed';
         // }
-        }else{
-            echo 'not set';
         }
+        // else{
+        //     echo 'not set';
+        // }
         // $year = isset($_POST['year']) ? $_POST['year'] : '';
         
     }

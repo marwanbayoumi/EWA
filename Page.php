@@ -84,7 +84,7 @@ abstract class Page
     {
         $headline = htmlspecialchars($headline);
         header("Content-type: text/html; charset=UTF-8");
-        include 'includes/header.php';
+        include_once 'includes/header.php';
         // to do: output common beginning of HTML code 
         // including the individual headline
     }
@@ -96,7 +96,7 @@ abstract class Page
      */
     protected function generatePageFooter() 
     {
-        include 'includes/footer.php';
+        include_once 'includes/footer.php';
         // to do: output common end of HTML code
     }
 
