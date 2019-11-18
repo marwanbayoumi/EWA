@@ -7,7 +7,7 @@
   </head>
   <body>
     <header class="pageHeader">
-      <h1><a class="logo" href="index.php">Pizza2Go</a></h1>
+      <h1><a class="logo" href="Bestellung.php">Pizza2Go</a></h1>
       <div class="header-nav">
         <a href="Bestellung.php">Bestellung </a>  
         <a href="kunde.php">Kunde</a>      

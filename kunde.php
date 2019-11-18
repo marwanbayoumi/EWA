@@ -60,10 +60,10 @@ class Kunde extends Page
             $fieldname3 = $row["Bestellzeitpunkt"];
      echo<<<HTML
         <div> 
-        Bestellungsnummer: $field1name1 <br> Addresse: $fieldname2 <br> Bestllzeitpunkt: $fieldname3</div>
+        Bestellungsnummer: $field1name1 <br> Addresse: $fieldname2 <br> Bestllzeitpunkt: $fieldname3 </div><br>
 HTML;
 
-    $this->generatePageFooter();
+    // $this->generatePageFooter();
     }
 }
     

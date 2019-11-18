@@ -87,7 +87,7 @@ HTML;
 </form>
 HTML;
            
-    $this->generatePageFooter();
+     $this->generatePageFooter();
     }
     
     protected function processReceivedData() 
