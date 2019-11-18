@@ -60,7 +60,6 @@ class Kunde extends Page
             $field3name = $row["Bilddatei"];
             $field4name = $row["Preis"];
      
-            //echo $field1name. " " . $field2name. " " . $field3name. " " . $field4name . '<br><br>';
             echo <<<HTML
             <div >
             <figure> 
@@ -77,10 +76,10 @@ HTML;
     echo<<<HTML
     <br>
               <form action ="Kunde.php" method="post"> 
-  <input type="text" value="" name="email"  placeholder="Ihre Email-Adresse"> <br/><br/>
-  <input type="text" value="" name="vorname"  placeholder="Vorname"> <br/><br/>
-  <input type="text" value="" name="nachname"  placeholder="Nachname"> <br/><br/>
-  <input type="text"  name="addresse"  placeholder="Addresse"> <br/><br/>
+  <input type="text" value="" name="email" placeholder="Ihre Email-Adresse"> <br/><br/>
+  <input type="text" value="" name="vorname" placeholder="Vorname"> <br/><br/>
+  <input type="text" value="" name="nachname" placeholder="Nachname"> <br/><br/>
+  <input type="text"  name="addresse" placeholder="Addresse"> <br/><br/>
   <!-- <input type="text" value="" name="stadt"  placeholder="Stadt"> <br/><br/> -->
 <input type="button" name="delete choice " value="Eingabe Löschen">
 <input type="submit" name="order" value="Bestellen">
