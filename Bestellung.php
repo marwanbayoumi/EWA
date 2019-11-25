@@ -62,15 +62,25 @@ class Bestellung extends Page
      
             //echo $field1name. " " . $field2name. " " . $field3name. " " . $field4name . '<br><br>';
             echo <<<HTML
-         <div >
+         <div >     
             <figure> 
 HTML;
           echo  '<img class="pizzaImage" src="'.$field3name.'"> <br/>';
             echo <<<HTML
+            <form action="Bestellung.php" method="post">
             <figcaption> $field2name</figcaption> <br/>
              $field4name €
             </figure>
-              <br/>
+            <!-- <form action="#" method="post">
+            <select name="Anzahl">
+                <option value="">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+            </form> -->
+            <br/>
               </div >
 HTML;
     } //create form html and send it to Bestellung.php
@@ -82,7 +92,7 @@ HTML;
   <input type="text" value="" name="nachname"  placeholder="Nachname"> <br/><br/>
   <input type="text"  name="addresse"  placeholder="Addresse"> <br/><br/>
   <!-- <input type="text" value="" name="stadt"  placeholder="Stadt"> <br/><br/> -->
-<input type="button" name="delete choice " value="Eingabe Löschen">
+<input type="button" name="delete choice" value="Eingabe Löschen">
 <input type="submit" name="order" value="Bestellen">
 </form>
 HTML;
@@ -98,17 +108,7 @@ HTML;
             $sql = "INSERT INTO bestellung (BestellungID,Addresse, Bestellzeitpunkt) VALUES ('','$addresse','$timestamp' )";
             mysqli_query($this->_database, $sql);
             header('Location: Bestellung.php');
-            // if(mysqli_query($this->_database, $sql)){
-            //     echo "insert successful";
-            // }else{
-            //     echo 'insert failed';
-        // }
         }
-        // else{
-        //     echo 'not set';
-        // }
-        // $year = isset($_POST['year']) ? $_POST['year'] : '';
-        
     }
 
     public static function main() 

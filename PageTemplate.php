@@ -85,29 +85,8 @@ class PageTemplate extends Page
     {
         $this->getViewData();
         $this->generatePageHeader('to do: change headline');
-echo <<<HTML
-        <div class="addr">
-        <p>addresse:dfsdf</p>
-        </div>
-        <div class="fahrer-select">
-        <form action="">
-        <input type="radio" name="status" value=""/> fertig
-        <input type="radio" name="status" value=""/> unterwegs
-        <input type="radio" name="status" value=""/> geliefert
-        </form>
-        </div>
-        
-        <div class="addr">
-        <p>addresse:lala</p>
-        </div>
-        <div class="fahrer-select">
-        <form action="">
-        <input type="radio" name="status" value=""/> fertig
-        <input type="radio" name="status" value=""/> unterwegs
-        <input type="radio" name="status" value=""/> geliefert
-        </form>
-        </div>
-HTML;
+        // to do: call generateView() for all members
+        // to do: output view of this page
         $this->generatePageFooter();
     }
     

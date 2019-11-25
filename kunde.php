@@ -44,7 +44,7 @@ class Kunde extends Page
 
     protected function getViewData()
     {
-        $query = "SELECT * FROM bestellung";
+        $query = "SELECT * FROM bestelltepizza";
 
         return mysqli_query($this->_database, $query);
     }
@@ -55,16 +55,19 @@ class Kunde extends Page
         $this->generatePageHeader('');
        while($row = mysqli_fetch_array($result)) {
 
-            $field1name1 = $row["BestellungID"];
-            $fieldname2 = $row["Addresse"];
-            $fieldname3 = $row["Bestellzeitpunkt"];
+            $field1name1 = $row["PizzaID"];
+            $fieldname2 = $row["fBestellungID"];
+            $fieldname3 = $row["fPizzaNummer"];
+            $fieldname4 = $row["Status"];
+
      echo<<<HTML
-        <div> 
-        Bestellungsnummer: $field1name1 <br> Addresse: $fieldname2 <br> Bestllzeitpunkt: $fieldname3 </div><br>
+        <div> <H3>Pizza: $field1name1</H3>
+        Bestellungsnummer: $fieldname2 <br> Status: $fieldname4 </div><br>
 HTML;
 
-    // $this->generatePageFooter();
     }
+    $this->generatePageFooter();
+    
 }
     
     protected function processReceivedData() 
