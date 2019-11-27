@@ -81,9 +81,9 @@ HTML;
     //    var_dump(count(mysqli_fetch_array($this->getViewData())));
 
     for($i=0; $i < mysqli_num_rows($this->getViewData()); $i++){
-        // while($assoc_array){
+       
             echo  '<input type="text"  name="'.'pizza'.$i.'"  placeholder="'.$assoc_array['PizzaName'].'"><br/>';
-        // }
+                
       }
     echo <<<HTML
       <input type="button" name="delete choice" value="Eingabe Löschen">
@@ -99,9 +99,7 @@ HTML;
             $addresse = $_POST['addresse'];
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO `bestellung` (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
-            // $row = mysqli_fetch_array($this->getViewData());
-            // $pizzaName = $row['PizzaName'];
-            // $sql_2 = "INSERT INTO bestelltepizza (PizzaID, fBestellungID, fPizzaName, 'Status' ) VALUES ('','2','$pizzaName','lo' )";
+            
             mysqli_query($this->_database, $sql);
 
                 // header('Location: Bestellung.php');
