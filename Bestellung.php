@@ -96,7 +96,6 @@ HTML;
 <input type="submit" name="order" value="Bestellen">
 </form>
 HTML;
-           
      $this->generatePageFooter();
     }
     
@@ -107,8 +106,9 @@ HTML;
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO bestellung (BestellungID,Addresse, Bestellzeitpunkt) VALUES ('','$addresse','$timestamp' )";
             mysqli_query($this->_database, $sql);
-            header('Location: Bestellung.php');
+                header('Location: Kunde.php');
         }
+           //this->namedb-> insert_id; get forgein key 
     }
 
     public static function main() 

@@ -69,7 +69,9 @@ class PageTemplate extends Page
      */
     protected function getViewData()
     {
-        // to do: fetch data for this view from the database
+        $query = "SELECT * FROM bestelltepizza";
+
+        return mysqli_query($this->_database, $query);
     }
     
     /**
@@ -83,8 +85,22 @@ class PageTemplate extends Page
      */
     protected function generateView() 
     {
-        $this->getViewData();
+        $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
+        
+        while($row = mysqli_fetch_array($result)) {
+
+            $field1name1 = $row["PizzaID"];
+            $fieldname2 = $row["fBestellungID"];
+            $fieldname3 = $row["fPizzaNummer"];
+            $fieldname4 = $row["Status"];
+
+     echo<<<HTML
+        <div> <H3>Pizza: $field1name1</H3>
+        Bestellungsnummer: $fieldname2 <br> Status: $fieldname4 </div><br>
+HTML;
+
+    }
 echo <<<HTML
         <div class="addr">
         <p>addresse:dfsdf</p>
