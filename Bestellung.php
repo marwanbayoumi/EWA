@@ -32,7 +32,6 @@ require_once './Page.php';
  */
 class Bestellung extends Page
 {    
-
     protected function __construct() 
     {
         parent::__construct();
@@ -46,7 +45,7 @@ class Bestellung extends Page
     {
         $query = "SELECT * FROM angebot";
 
-        return mysqli_query($this->_database, $query);
+        return mysqli_query($this->_database, $query); 
     }
     
     protected function generateView() 
@@ -68,7 +67,6 @@ HTML;
             <figcaption> $field2name</figcaption> <br/>
              $field4name €
             </figure>
-
             <br/>
               </div >
 HTML;
@@ -76,14 +74,16 @@ HTML;
     echo <<<HTML
     <br>
     <form action ="Bestellung.php" method="POST"> 
-       <input type="text"  name="addresse"  placeholder="Addresse"><br/><br/>
+      Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse"  placeholder="Addresse"><br/><br/>
 HTML;
-    //    var_dump(count(mysqli_fetch_array($this->getViewData())));
 
-    for($i=0; $i < mysqli_num_rows($this->getViewData()); $i++){
-       
-            echo  '<input type="text"  name="'.'pizza'.$i.'"  placeholder="'.$assoc_array['PizzaName'].'"><br/>';
-                
+    $pizzaName= (array) null;
+           $assoc_array = mysqli_fetch_all($this->getViewData());
+    for($i=0; $i < mysqli_num_rows($result); $i++){
+        for($i=0; $i < count($assoc_array); $i++){
+            $name=$assoc_array[$i][1];      # array_push($pizzaName,$assoc_array[$i][1]);  
+            echo  $name .': <input type="number" max="5" min="1"  name="'.'pizza'.$i.'"  placeholder="'.$name.'"><br/><br/>'; #'.$pizzaName[$i].'
+        }
       }
     echo <<<HTML
       <input type="button" name="delete choice" value="Eingabe Löschen">
@@ -99,7 +99,9 @@ HTML;
             $addresse = $_POST['addresse'];
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO `bestellung` (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
-            
+            // $row = mysqli_fetch_array($this->getViewData());
+            // $pizzaName = $row['PizzaName'];
+            // $sql_2 = "INSERT INTO bestelltepizza (PizzaID, fBestellungID, fPizzaName, 'Status' ) VALUES ('','2','$pizzaName','lo' )";
             mysqli_query($this->_database, $sql);
 
                 // header('Location: Bestellung.php');

@@ -40,7 +40,6 @@ abstract class Page
     protected $dbUsername = "root";
     protected $dbPassword = "";
     protected $_database; 
-    protected $pizzaArray = [];
 
 
     
