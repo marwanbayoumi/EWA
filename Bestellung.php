@@ -31,12 +31,12 @@ require_once './Page.php';
  * @author   Ralf Hahn, <ralf.hahn@h-da.de> 
  */
 class Bestellung extends Page
-{
+{    
+
     protected function __construct() 
     {
         parent::__construct();
     }
-    
     protected function __destruct() 
     {
         parent::__destruct();
@@ -59,56 +59,55 @@ class Bestellung extends Page
             $field2name = $row["PizzaName"];
             $field3name = $row["Bilddatei"];
             $field4name = $row["Preis"];
-     
-            //echo $field1name. " " . $field2name. " " . $field3name. " " . $field4name . '<br><br>';
             echo <<<HTML
          <div >     
             <figure> 
 HTML;
           echo  '<img class="pizzaImage" src="'.$field3name.'"> <br/>';
             echo <<<HTML
-            <form action="Bestellung.php" method="post">
             <figcaption> $field2name</figcaption> <br/>
              $field4name €
             </figure>
-            <!-- <form action="#" method="post">
-            <select name="Anzahl">
-                <option value="">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-            </select>
-            </form> -->
+
             <br/>
               </div >
 HTML;
     } //create form html and send it to Bestellung.php
-    echo<<<HTML
+    echo <<<HTML
     <br>
-              <form action ="Bestellung.php" method="post"> 
-  <input type="text" value="" name="email"  placeholder="Ihre Email-Adresse"> <br/><br/>
-  <input type="text" value="" name="vorname"  placeholder="Vorname"> <br/><br/>
-  <input type="text" value="" name="nachname"  placeholder="Nachname"> <br/><br/>
-  <input type="text"  name="addresse"  placeholder="Addresse"> <br/><br/>
-  <!-- <input type="text" value="" name="stadt"  placeholder="Stadt"> <br/><br/> -->
-<input type="button" name="delete choice" value="Eingabe Löschen">
-<input type="submit" name="order" value="Bestellen">
-</form>
+    <form action ="Bestellung.php" method="POST"> 
+       <input type="text"  name="addresse"  placeholder="Addresse"><br/><br/>
+HTML;
+    //    var_dump(count(mysqli_fetch_array($this->getViewData())));
+
+    for($i=0; $i < mysqli_num_rows($this->getViewData()); $i++){
+        // while($assoc_array){
+            echo  '<input type="text"  name="'.'pizza'.$i.'"  placeholder="'.$assoc_array['PizzaName'].'"><br/>';
+        // }
+      }
+    echo <<<HTML
+      <input type="button" name="delete choice" value="Eingabe Löschen">
+         <input type="submit" name="order" value="Bestellen">
+    </form>
 HTML;
      $this->generatePageFooter();
     }
     
     protected function processReceivedData() 
     {
-        if(isset($_POST['addresse']) ){ 
+        if(isset($_POST['addresse'])){ 
             $addresse = $_POST['addresse'];
             $timestamp = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO bestellung (BestellungID,Addresse, Bestellzeitpunkt) VALUES ('','$addresse','$timestamp' )";
+            $sql = "INSERT INTO `bestellung` (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
+            // $row = mysqli_fetch_array($this->getViewData());
+            // $pizzaName = $row['PizzaName'];
+            // $sql_2 = "INSERT INTO bestelltepizza (PizzaID, fBestellungID, fPizzaName, 'Status' ) VALUES ('','2','$pizzaName','lo' )";
             mysqli_query($this->_database, $sql);
-                header('Location: Kunde.php');
+
+                // header('Location: Bestellung.php');
         }
-           //this->namedb-> insert_id; get forgein key 
+           //this->namedb->insert_id; get last forgein key 
+        //    header('Location: Bestellung.php');
     }
 
     public static function main() 
