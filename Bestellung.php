@@ -107,7 +107,7 @@ HTML;
             foreach ($_POST['pizza'] as $name => $anzahl){
                 echo $name . $anzahl;
                 for($i = 0; $i < $anzahl; $i++){
-                    $sql_2 = "INSERT INTO bestelltepizza (`PizzaID`, `fBestellungID`, `fPizzaName`, `Status` ) VALUES ('','$lastID','$name','lo' )";
+                    $sql_2 = "INSERT INTO bestelltepizza (`PizzaID`, `fBestellungID`, `fPizzaName`, `Status` ) VALUES ('','$lastID','$name','Bestellt' )";
                     mysqli_query($this->_database, $sql_2);
                     
                 }
