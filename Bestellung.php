@@ -32,6 +32,7 @@ require_once './Page.php';
  */
 class Bestellung extends Page
 {    
+    
     protected function __construct() 
     {
         parent::__construct();
@@ -76,13 +77,12 @@ HTML;
     <form action ="Bestellung.php" method="POST"> 
       Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse"  placeholder="Addresse"><br/><br/>
 HTML;
-
-    $pizzaName= (array) null;
-           $assoc_array = mysqli_fetch_all($this->getViewData());
+    
+    $pizza_array = mysqli_fetch_all($this->getViewData());
     for($i=0; $i < mysqli_num_rows($result); $i++){
-        for($i=0; $i < count($assoc_array); $i++){
-            $name=$assoc_array[$i][1];      # array_push($pizzaName,$assoc_array[$i][1]);  
-            echo  $name .': <input type="number" max="5" min="1"  name="'.'pizza'.$i.'"  placeholder="'.$name.'"><br/><br/>'; #'.$pizzaName[$i].'
+        for($i=0; $i < count($pizza_array); $i++){
+            $name=$pizza_array[$i][1];      
+            echo  $name .': <input type="number" max="5" min="1"  name="pizza['.$name.']"  placeholder="'.$name.'"><br/><br/>';      
         }
       }
     echo <<<HTML
@@ -90,24 +90,32 @@ HTML;
          <input type="submit" name="order" value="Bestellen">
     </form>
 HTML;
+
      $this->generatePageFooter();
     }
-    
+
     protected function processReceivedData() 
     {
-        if(isset($_POST['addresse'])){ 
+        if( isset($_POST['addresse']) ){ 
             $addresse = $_POST['addresse'];
             $timestamp = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO `bestellung` (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
-            // $row = mysqli_fetch_array($this->getViewData());
-            // $pizzaName = $row['PizzaName'];
-            // $sql_2 = "INSERT INTO bestelltepizza (PizzaID, fBestellungID, fPizzaName, 'Status' ) VALUES ('','2','$pizzaName','lo' )";
+            $sql = "INSERT INTO bestellung (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
+            
             mysqli_query($this->_database, $sql);
-
-                // header('Location: Bestellung.php');
+            $lastID = $this->_database->insert_id; //get last forgein key 
+            echo ($lastID); 
+            foreach ($_POST['pizza'] as $name => $anzahl){
+                echo $name . $anzahl;
+                for($i = 0; $i < $anzahl; $i++){
+                    $sql_2 = "INSERT INTO bestelltepizza (`PizzaID`, `fBestellungID`, `fPizzaName`, `Status` ) VALUES ('','$lastID','$name','lo' )";
+                    mysqli_query($this->_database, $sql_2);
+                    
+                }
+            }
+            // header('Location: Bestellung.php');
         }
-           //this->namedb->insert_id; get last forgein key 
-        //    header('Location: Bestellung.php');
+      
+        // header('Location: Bestellung.php');
     }
 
     public static function main() 

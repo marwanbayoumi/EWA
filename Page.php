@@ -36,11 +36,10 @@ abstract class Page
      * accessed by all operations of the class.
      */
     protected $host = "localhost";
-    protected $dbName = "ewa";
     protected $dbUsername = "root";
     protected $dbPassword = "";
+    protected $dbName = "ewa";
     protected $_database; 
-
 
     
     // --- OPERATIONS ---

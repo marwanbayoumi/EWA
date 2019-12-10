@@ -32,6 +32,7 @@ require_once './Page.php';
  */
 class Kunde extends Page
 {
+
     protected function __construct() 
     {
         parent::__construct();
@@ -64,8 +65,9 @@ class Kunde extends Page
         <div> <H3>Pizza: $field1name1</H3>
         Bestellungsnummer: $fieldname2 <br> Status: $fieldname4 </div><br>
 HTML;
+echo $_SESSION["test"];
 
-    }
+}
     $this->generatePageFooter();
     
 }
