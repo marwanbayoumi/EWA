@@ -82,7 +82,7 @@ HTML;
     for($i=0; $i < mysqli_num_rows($result); $i++){
         for($i=0; $i < count($pizza_array); $i++){
             $name=$pizza_array[$i][1];      
-            echo  $name .': <input type="number" max="5" min="1"  name="pizza['.$name.']"  placeholder="'.$name.'"><br/><br/>';      
+            echo  $name .': <input type="number" max="5" min="0"  name="pizza['.$name.']"  placeholder="'.$name.'"><br/><br/>';      
         }
       }
     echo <<<HTML
@@ -97,7 +97,7 @@ HTML;
     protected function processReceivedData() 
     {
         if( isset($_POST['addresse']) ){ 
-            $addresse = $_POST['addresse'];
+            $addresse = htmlspecialchars($_POST['addresse']);
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO bestellung (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
             

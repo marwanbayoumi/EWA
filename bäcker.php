@@ -69,7 +69,7 @@ class PageTemplate extends Page
      */
     protected function getViewData()
     {
-        $query = "SELECT * FROM bestelltepizza";
+        $query = "SELECT * FROM bestelltepizza ORDER BY fBestellungID DESC";
 
         return mysqli_query($this->_database, $query);
     }
@@ -92,38 +92,23 @@ class PageTemplate extends Page
 
             $field1name1 = $row["PizzaID"];
             $fieldname2 = $row["fBestellungID"];
-            $fieldname3 = $row["fPizzaNummer"];
+            $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
 
      echo<<<HTML
         <div> <H3>Pizza: $field1name1</H3>
-        Bestellungsnummer: $fieldname2 <br> Status: $fieldname4 </div><br>
+        Bestellungsnummer: $fieldname2 <br> 
+        Status: 
+        <form action="statusChange">
+        <input type="radio" name="status" value=""/> unterwegs
+        <input type="radio" name="status" value=""/> geliefert
+        <input type="radio" name="status" value=""/> fertig
+
+        </form>
+        </div><br>
 HTML;
 
     }
-echo <<<HTML
-        <div class="addr">
-        <p>addresse:dfsdf</p>
-        </div>
-        <div class="fahrer-select">
-        <form action="">
-        <input type="radio" name="status" value=""/> fertig
-        <input type="radio" name="status" value=""/> unterwegs
-        <input type="radio" name="status" value=""/> geliefert
-        </form>
-        </div>
-        
-        <div class="addr">
-        <p>addresse:lala</p>
-        </div>
-        <div class="fahrer-select">
-        <form action="">
-        <input type="radio" name="status" value=""/> fertig
-        <input type="radio" name="status" value=""/> unterwegs
-        <input type="radio" name="status" value=""/> geliefert
-        </form>
-        </div>
-HTML;
         $this->generatePageFooter();
     }
     
