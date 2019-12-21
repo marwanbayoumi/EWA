@@ -45,9 +45,7 @@ class Kunde extends Page
 
     protected function getViewData()
     {
-        $query = "SELECT * FROM bestelltepizza";
-
-        return mysqli_query($this->_database, $query);
+        return null;
     }
     
     protected function generateView() 

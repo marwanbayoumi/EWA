@@ -103,11 +103,11 @@ HTML;
             
             mysqli_query($this->_database, $sql);
             $lastID = $this->_database->insert_id; //get last forgein key 
-            echo ($lastID); 
+            // echo ($lastID); 
             foreach ($_POST['pizza'] as $name => $anzahl){
                 echo $name . $anzahl;
                 for($i = 0; $i < $anzahl; $i++){
-                    $sql_2 = "INSERT INTO bestelltepizza (`PizzaID`, `fBestellungID`, `fPizzaName`, `Status` ) VALUES ('','$lastID','$name','Bestellt' )";
+                    $sql_2 = "INSERT INTO bestelltepizza (`PizzaID`, `fBestellungID`, `fPizzaName`, `Status` ) VALUES ('','$lastID','$name','Bestellt')";
                     mysqli_query($this->_database, $sql_2);
                     
                 }

@@ -69,7 +69,10 @@ class PageTemplate extends Page
      */
     protected function getViewData()
     {
-        // to do: fetch data for this view from the database
+        $query = "SELECT bestellung.Addresse, bestellung.BestellungID, bestelltepizza.fPizzaName, bestelltepizza.Status
+        FROM bestellung INNER JOIN bestelltepizza ON bestellung.BestellungID=bestelltepizza.fBestellungID";
+
+        return mysqli_query($this->_database, $query);
     }
     
     /**
@@ -83,34 +86,55 @@ class PageTemplate extends Page
      */
     protected function generateView() 
     {
-        $this->getViewData();
+        $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
+        $value = $value1 = $value2 = "";
+
+        while($row = mysqli_fetch_array($result)) {
+
+            $fieldname1 = $row["Addresse"];
+            $fieldname2 = $row["BestellungID"];
+            $fieldname3 = $row["fPizzaName"];
+            $fieldname4 = $row["Status"];
+            
+            switch($fieldname4){
+
+                case "Bestellt":
+                     $value = "checked";
+                break;
+                case "im Ofen":
+                   $value1 = "checked";
+                break;
+                
+                case "fertig":
+                    $value2 = "checked";
+                break;
+                }
+                   
 echo <<<HTML
         <div class="addr">
-        <p>addresse:dfsdf</p>
+        <span>Pizza: $fieldname1</span>
+        <br>
+        <span>Addresse: $fieldname3</span>
         </div>
         <div class="fahrer-select">
-        <form action="">
-        <input type="radio" name="status" value=""/> fertig
-        <input type="radio" name="status" value=""/> unterwegs
-        <input type="radio" name="status" value=""/> geliefert
-        </form>
-        </div>
-        
-        <div class="addr">
-        <p>addresse:lala</p>
-        </div>
-        <div class="fahrer-select">
-        <form action="">
-        <input type="radio" name="status" value=""/> fertig
-        <input type="radio" name="status" value=""/> unterwegs
-        <input type="radio" name="status" value=""/> geliefert
-        </form>
-        </div>
+        <form action="" method="GET">
+        <input type="radio" name="status" {$value}/> bestellt
+        <input type="radio" name="status" {$value1}/> im Ofen
+        <input type="radio" name="status" {$value2}/> fertig
+        <b2>
+         </form>
+     </div>
+     <br>
 HTML;
-        $this->generatePageFooter();
     }
-    
+    echo<<<HTML
+    <form action="#" >
+    <input type="submit" name="refresh" value="Aktualisieren">
+    </form>
+ HTML; 
+    $this->generatePageFooter();
+}
     /**
      * Processes the data that comes via GET or POST i.e. CGI.
      * If this page is supposed to do something with submitted
@@ -123,7 +147,7 @@ HTML;
     protected function processReceivedData() 
     {
         parent::processReceivedData();
-        // to do: call processReceivedData() for all members
+        
     }
 
     /**

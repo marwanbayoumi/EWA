@@ -87,29 +87,52 @@ class PageTemplate extends Page
     {
         $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
+        $value = $value1 = $value2 = "";
+      
         
         while($row = mysqli_fetch_array($result)) {
 
-            $field1name1 = $row["PizzaID"];
+            $fieldname1 = $row["PizzaID"];
             $fieldname2 = $row["fBestellungID"];
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
+            switch($fieldname4){
+
+                case "Bestellt":
+                     $value = "checked";
+                break;
+                case "im Ofen":
+                   $value1 = "checked";
+                break;
+                
+                case "fertig":
+                    $value2 = "checked";
+                break;
+                }
 
      echo<<<HTML
-        <div> <H3>Pizza: $field1name1</H3>
+     <form action="#" method="POST">
+        <div> <H3>Pizza: $fieldname1</H3>
         Bestellungsnummer: $fieldname2 <br> 
         Status: 
-        <form action="statusChange">
-        <input type="radio" name="status" value=""/> unterwegs
-        <input type="radio" name="status" value=""/> geliefert
-        <input type="radio" name="status" value=""/> fertig
-
-        </form>
-        </div><br>
 HTML;
 
+      echo '<input type="radio" name="status['.$fieldname1.']" value="Bestellt" '.$value.'/> bestellt';
+      echo '<input type="radio" name="status['.$fieldname1.']"  value="im Ofen" '.$value.'/> im Ofen';
+      echo '<input type="radio" name="status['.$fieldname1.']"  value="fertig" '.$value2.'/> fertig';
+
+ 
+echo<<<HTML
+<br><br>
+      <input type="submit" name="refresh" value="Aktualisieren">
+        </div><br>
+        </form>
+HTML;
     }
-        $this->generatePageFooter();
+ 
+ var_dump($_POST['status']);
+
+    $this->generatePageFooter();
     }
     
     /**
@@ -123,7 +146,9 @@ HTML;
      */
     protected function processReceivedData() 
     {
-        parent::processReceivedData();
+       /*  if(isset($_POST['status'])){
+            $sql2 = 
+        } */
         // to do: call processReceivedData() for all members
     }
 
