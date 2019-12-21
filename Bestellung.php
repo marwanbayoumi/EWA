@@ -75,7 +75,7 @@ HTML;
     echo <<<HTML
     <br>
     <form action ="Bestellung.php" method="POST"> 
-      Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse"  placeholder="Addresse"><br/><br/>
+      Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse" id="address"  placeholder="Addresse"><br/><br/>
 HTML;
     
     $pizza_array = mysqli_fetch_all($this->getViewData());
@@ -86,11 +86,11 @@ HTML;
         }
       }
     echo <<<HTML
-      <input type="button" name="delete choice" value="Eingabe Löschen">
+      <input type="button" id="delete" value="Eingabe Löschen">
          <input type="submit" name="order" value="Bestellen">
     </form>
 HTML;
-
+echo '<script src="randoms.js"></script>';
      $this->generatePageFooter();
     }
 
@@ -114,7 +114,7 @@ HTML;
             }
             // header('Location: Bestellung.php');
         }
-      
+        
         // header('Location: Bestellung.php');
     }
 
