@@ -87,7 +87,7 @@ class PageTemplate extends Page
     {
         $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
-        $value = $value1 = $value2 = "";
+        $value = $value1 = $value2 = " ";
       
         
         while($row = mysqli_fetch_array($result)) {
@@ -96,19 +96,23 @@ class PageTemplate extends Page
             $fieldname2 = $row["fBestellungID"];
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
-            switch($fieldname4){
+              switch($fieldname4){
 
                 case "Bestellt":
                      $value = "checked";
+                    $value1 = $value2 = " ";
                 break;
+
                 case "im Ofen":
                    $value1 = "checked";
+                    $value = $value2 = " ";
                 break;
                 
                 case "fertig":
                     $value2 = "checked";
+                    $value = $value1 = " ";
                 break;
-                }
+                }  
 
      echo<<<HTML
      <form action="#" method="POST">
@@ -118,20 +122,23 @@ class PageTemplate extends Page
 HTML;
 
       echo '<input type="radio" name="status['.$fieldname1.']" value="Bestellt" '.$value.'/> bestellt';
-      echo '<input type="radio" name="status['.$fieldname1.']"  value="im Ofen" '.$value.'/> im Ofen';
+      echo '<input type="radio" name="status['.$fieldname1.']"  value="im Ofen" '.$value1.'/> im Ofen';
       echo '<input type="radio" name="status['.$fieldname1.']"  value="fertig" '.$value2.'/> fertig';
 
  
 echo<<<HTML
 <br><br>
-      <input type="submit" name="refresh" value="Aktualisieren">
+HTML;
+echo '<input type="submit" name="refresh" value="Aktualisieren">';
+        
+echo<<<HTML
         </div><br>
         </form>
-HTML;
+
+        HTML;
     }
  
- var_dump($_POST['status']);
-
+//  var_dump($_POST['status']);
     $this->generatePageFooter();
     }
     
@@ -146,10 +153,15 @@ HTML;
      */
     protected function processReceivedData() 
     {
-       /*  if(isset($_POST['status'])){
-            $sql2 = 
-        } */
-        // to do: call processReceivedData() for all members
+        if(isset($_POST['status'])){
+            foreach ($_POST['status'] as $pizzaID => $newstatus){
+                    // echo $pizzaID .' '. $newstatus;
+                    $sql = "UPDATE bestelltepizza SET `Status`='$newstatus' WHERE `PizzaID`='$pizzaID'";
+                    mysqli_query($this->_database, $sql);
+            
+                }
+        }
+            // header('Location: Bäcker.php');    
     }
 
     /**
