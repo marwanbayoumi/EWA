@@ -85,10 +85,10 @@ class PageTemplate extends Page
      */
     protected function generateView() 
     {
+        header('Refresh: 5');
         $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
         $value = $value1 = $value2 = " ";
-      
         
         while($row = mysqli_fetch_array($result)) {
 
@@ -117,7 +117,7 @@ class PageTemplate extends Page
 
      echo<<<HTML
      <form action="#" method="POST">
-        <div> <H3>Pizza: $fieldname1</H3>
+        <div> <H3>$fieldname3</H3>
         Bestellungsnummer: $fieldname2 <br> 
         Status: 
 HTML;

@@ -69,7 +69,7 @@ class PageTemplate extends Page
      */
     protected function getViewData()
     {
-        $query = "SELECT bestellung.Addresse, bestellung.BestellungID, bestelltepizza.fPizzaName, bestelltepizza.Status
+        $query = "SELECT bestellung.Addresse, bestellung.BestellungID, bestelltepizza.fPizzaName, bestelltepizza.Status, bestelltepizza.PizzaID
         FROM bestellung INNER JOIN bestelltepizza ON bestellung.BestellungID=bestelltepizza.fBestellungID";
 
         return mysqli_query($this->_database, $query);
@@ -86,9 +86,10 @@ class PageTemplate extends Page
      */
     protected function generateView() 
     {
+        header('Refresh: 5');
         $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
-        $value = $value1 = $value2 = "";
+        $value = $value1 = $value2 = " ";
 
         while($row = mysqli_fetch_array($result)) {
 
@@ -96,19 +97,20 @@ class PageTemplate extends Page
             $fieldname2 = $row["BestellungID"];
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
+            $fieldname5 = $row["PizzaID"];
             
             switch($fieldname4){
-                case "Bestellt":
+                case "fertig":
                      $value = "checked";
                     $value1 = $value2 = " ";
                 break;
 
-                case "im Ofen":
+                case "unterwegs":
                    $value1 = "checked";
                     $value = $value2 = " ";
                 break;
                 
-                case "fertig":
+                case "zugestellt":
                     $value2 = "checked";
                     $value = $value1 = " ";
                 break;
@@ -117,25 +119,26 @@ class PageTemplate extends Page
                    
 echo <<<HTML
         <div class="addr">
-        <span>Pizza: $fieldname1</span>
+        <span>$fieldname3</span>
         <br>
-        <span>Addresse: $fieldname3</span>
+        <span>Addresse: $fieldname1</span>
+        <br>
+        <span>BestellungID: $fieldname2</span>
         </div>
         <div class="fahrer-select">
-        <form action="" method="GET">
+        <form action="" method="POST">
 HTML;
-echo '<input type="radio" name="status['.$fieldname1.']" value="Bestellt" '.$value.'/> fertig';
-echo '<input type="radio" name="status['.$fieldname1.']"  value="im Ofen" '.$value1.'/> unterwegs';
-echo '<input type="radio" name="status['.$fieldname1.']"  value="fertig" '.$value2.'/>  zugestellt<br><br>';
+echo '<input type="radio" name="status['.$fieldname5.']" value="fertig" '.$value.'/> fertig';
+echo '<input type="radio" name="status['.$fieldname5.']"  value="unterwegs" '.$value1.'/> unterwegs';
+echo '<input type="radio" name="status['.$fieldname5.']"  value="zugestellt" '.$value2.'/>  zugestellt<br><br>';
 echo '<input type="submit" name="refresh" value="Aktualisieren">';
   
 echo<<<HTML
   </div><br>
   </form>
-
   HTML;
-    $this->generatePageFooter();
 }
+$this->generatePageFooter();
 }
     /**
      * Processes the data that comes via GET or POST i.e. CGI.
@@ -148,8 +151,12 @@ echo<<<HTML
      */
     protected function processReceivedData() 
     {
-        parent::processReceivedData();
-        
+        if(isset($_POST['status'])){
+            foreach ($_POST['status'] as $pizzaID => $newstatus){
+                    $sql = "UPDATE bestelltepizza SET `Status`='$newstatus' WHERE `PizzaID`='$pizzaID'";
+                    mysqli_query($this->_database, $sql);
+            }
+        }
     }
 
     /**
