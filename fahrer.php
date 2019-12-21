@@ -98,18 +98,22 @@ class PageTemplate extends Page
             $fieldname4 = $row["Status"];
             
             switch($fieldname4){
-
                 case "Bestellt":
                      $value = "checked";
+                    $value1 = $value2 = " ";
                 break;
+
                 case "im Ofen":
                    $value1 = "checked";
+                    $value = $value2 = " ";
                 break;
                 
                 case "fertig":
                     $value2 = "checked";
+                    $value = $value1 = " ";
                 break;
-                }
+                }  
+
                    
 echo <<<HTML
         <div class="addr">
@@ -119,21 +123,19 @@ echo <<<HTML
         </div>
         <div class="fahrer-select">
         <form action="" method="GET">
-        <input type="radio" name="status" {$value}/> bestellt
-        <input type="radio" name="status" {$value1}/> im Ofen
-        <input type="radio" name="status" {$value2}/> fertig
-        <b2>
-         </form>
-     </div>
-     <br>
 HTML;
-    }
-    echo<<<HTML
-    <form action="#" >
-    <input type="submit" name="refresh" value="Aktualisieren">
-    </form>
- HTML; 
+echo '<input type="radio" name="status['.$fieldname1.']" value="Bestellt" '.$value.'/> fertig';
+echo '<input type="radio" name="status['.$fieldname1.']"  value="im Ofen" '.$value1.'/> unterwegs';
+echo '<input type="radio" name="status['.$fieldname1.']"  value="fertig" '.$value2.'/>  zugestellt<br><br>';
+echo '<input type="submit" name="refresh" value="Aktualisieren">';
+  
+echo<<<HTML
+  </div><br>
+  </form>
+
+  HTML;
     $this->generatePageFooter();
+}
 }
     /**
      * Processes the data that comes via GET or POST i.e. CGI.

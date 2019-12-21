@@ -96,6 +96,7 @@ class PageTemplate extends Page
             $fieldname2 = $row["fBestellungID"];
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
+            
               switch($fieldname4){
 
                 case "Bestellt":
@@ -123,13 +124,8 @@ HTML;
 
       echo '<input type="radio" name="status['.$fieldname1.']" value="Bestellt" '.$value.'/> bestellt';
       echo '<input type="radio" name="status['.$fieldname1.']"  value="im Ofen" '.$value1.'/> im Ofen';
-      echo '<input type="radio" name="status['.$fieldname1.']"  value="fertig" '.$value2.'/> fertig';
-
- 
-echo<<<HTML
-<br><br>
-HTML;
-echo '<input type="submit" name="refresh" value="Aktualisieren">';
+      echo '<input type="radio" name="status['.$fieldname1.']"  value="fertig" '.$value2.'/> fertig <br><br>';
+      echo '<input type="submit" name="refresh" value="Aktualisieren">';
         
 echo<<<HTML
         </div><br>
