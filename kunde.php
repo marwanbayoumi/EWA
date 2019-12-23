@@ -31,11 +31,13 @@ require_once './Page.php';
  * @author   Ralf Hahn, <ralf.hahn@h-da.de> 
  */
 class Kunde extends Page
-{
+{ 
 
     protected function __construct() 
     {
         parent::__construct();
+        session_start();
+
     }
     
     protected function __destruct() 
@@ -45,7 +47,9 @@ class Kunde extends Page
 
     protected function getViewData()
     {
-        return null;
+        $query = "SELECT * FROM bestelltepizza";
+
+        return mysqli_query($this->_database, $query); 
     }
     
     protected function generateView() 
@@ -56,15 +60,13 @@ class Kunde extends Page
 
             $field1name1 = $row["PizzaID"];
             $fieldname2 = $row["fBestellungID"];
-            $fieldname3 = $row["fPizzaNummer"];
+            $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
 
      echo<<<HTML
         <div> <H3>Pizza: $field1name1</H3>
         Bestellungsnummer: $fieldname2 <br> Status: $fieldname4 </div><br>
 HTML;
-echo $_SESSION["test"];
-
 }
     $this->generatePageFooter();
     
@@ -72,7 +74,12 @@ echo $_SESSION["test"];
     
     protected function processReceivedData() 
     {
-        parent::processReceivedData();
+        if(isset($_SESSION['lastID'])){
+            echo $_SESSION['lastID'];
+
+        }else{
+            echo 'not set';
+        }
     }
 
     public static function main() 

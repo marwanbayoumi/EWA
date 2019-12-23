@@ -1,4 +1,6 @@
 <?php	// UTF-8 marker äöüÄÖÜß€
+   
+
 /**
  * Class PageTemplate for the exercises of the EWA lecture
  * Demonstrates use of PHP including class and OO.
@@ -32,11 +34,14 @@ require_once './Page.php';
  */
 class Bestellung extends Page
 {    
-    
+  
     protected function __construct() 
     {
         parent::__construct();
+        session_start();
+        $_SESSION['lastID'] = session_id();
     }
+
     protected function __destruct() 
     {
         parent::__destruct();
@@ -48,7 +53,7 @@ class Bestellung extends Page
 
         return mysqli_query($this->_database, $query); 
     }
-    
+
     protected function generateView() 
     {
         $result = $this->getViewData();
@@ -74,10 +79,11 @@ HTML;
     } //create form html and send it to Bestellung.php
     echo <<<HTML
     <br>
-    <form action ="Bestellung.php" method="POST"> 
+    <form action ="Kunde.php" method="POST"> 
+    
       Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse" id="address"  placeholder="Addresse"><br/><br/>
 HTML;
-    
+    #
     $pizza_array = mysqli_fetch_all($this->getViewData());
     for($i=0; $i < mysqli_num_rows($result); $i++){
         for($i=0; $i < count($pizza_array); $i++){
@@ -98,18 +104,17 @@ echo '<script src="randoms.js"></script>';
     {
         if( isset($_POST['addresse']) ){ 
             $addresse = htmlspecialchars($_POST['addresse']);
+            // session_regenerate_id(true);
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO bestellung (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
-            
             mysqli_query($this->_database, $sql);
-            $lastID = $this->_database->insert_id; //get last forgein key 
-            // echo ($lastID); 
+            $lastID = $this->_database->insert_id; //get last inserted key 
             foreach ($_POST['pizza'] as $name => $anzahl){
                 // echo $name . $anzahl;
                 for($i = 0; $i < $anzahl; $i++){
                     $sql_2 = "INSERT INTO bestelltepizza (`PizzaID`, `fBestellungID`, `fPizzaName`, `Status` ) VALUES ('','$lastID','$name','Bestellt')";
                     mysqli_query($this->_database, $sql_2);
-                    
+
                 }
             }
             // header('Location: Bestellung.php');
