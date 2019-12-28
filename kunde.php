@@ -65,11 +65,9 @@ class Kunde extends Page
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
  
-          /*  if($fieldname4 == 'zugestellt'){
-                setcookie('cookie', time() -3600);
-                session_destroy();
-                session_unset();
-            } */
+          if($fieldname4 == 'zugestellt'){
+                setcookie('cookie', time() -3600);   
+            }
 
      echo<<<HTML
         <div> <H3> $fieldname3</H3>
@@ -77,8 +75,7 @@ class Kunde extends Page
 HTML;
 }
     $this->generatePageFooter();
-    echo "cookies \n";
-    print_r($_COOKIE);
+
 }
     
     protected function processReceivedData() 
