@@ -1,5 +1,5 @@
 <?php	// UTF-8 marker äöüÄÖÜß€
-   
+
 
 /**
  * Class PageTemplate for the exercises of the EWA lecture
@@ -38,8 +38,7 @@ class Bestellung extends Page
     protected function __construct() 
     {
         parent::__construct();
-        session_start();
-        $_SESSION['lastID'] = session_id();
+        // session_start();
     }
 
     protected function __destruct() 
@@ -79,12 +78,12 @@ HTML;
     } //create form html and send it to Bestellung.php
     echo <<<HTML
     <br>
-    <form action ="Kunde.php" method="POST"> 
+    <form action ="#" method="POST"> 
     
       Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse" id="address"  placeholder="Addresse"><br/><br/>
 HTML;
-    #
-    $pizza_array = mysqli_fetch_all($this->getViewData());
+
+$pizza_array = mysqli_fetch_all($this->getViewData());
     for($i=0; $i < mysqli_num_rows($result); $i++){
         for($i=0; $i < count($pizza_array); $i++){
             $name=$pizza_array[$i][1];      
@@ -104,23 +103,22 @@ echo '<script src="randoms.js"></script>';
     {
         if( isset($_POST['addresse']) ){ 
             $addresse = htmlspecialchars($_POST['addresse']);
-            // session_regenerate_id(true);
+            // session_id();
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO bestellung (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
             mysqli_query($this->_database, $sql);
             $lastID = $this->_database->insert_id; //get last inserted key 
+            setcookie('lastID',  $lastID, time() + 3600 , "/"); 
+            // echo $lastID;
             foreach ($_POST['pizza'] as $name => $anzahl){
                 // echo $name . $anzahl;
                 for($i = 0; $i < $anzahl; $i++){
                     $sql_2 = "INSERT INTO bestelltepizza (`PizzaID`, `fBestellungID`, `fPizzaName`, `Status` ) VALUES ('','$lastID','$name','Bestellt')";
                     mysqli_query($this->_database, $sql_2);
-
                 }
             }
-            // header('Location: Bestellung.php');
+            header('Location:Kunde.php');
         }
-        
-        // header('Location: Bestellung.php');
     }
 
     public static function main() 

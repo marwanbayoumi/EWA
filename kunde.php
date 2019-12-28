@@ -36,7 +36,7 @@ class Kunde extends Page
     protected function __construct() 
     {
         parent::__construct();
-        session_start();
+        // session_start();
 
     }
     
@@ -47,7 +47,9 @@ class Kunde extends Page
 
     protected function getViewData()
     {
-        $query = "SELECT * FROM bestelltepizza";
+        $cookie = $_COOKIE['lastID'];
+        $query = "SELECT * FROM bestelltepizza WHERE `fBestellungID`='$cookie'";
+        // $query = "SELECT * FROM bestelltepizza";
 
         return mysqli_query($this->_database, $query); 
     }
@@ -62,24 +64,26 @@ class Kunde extends Page
             $fieldname2 = $row["fBestellungID"];
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
+ 
+          /*  if($fieldname4 == 'zugestellt'){
+                setcookie('cookie', time() -3600);
+                session_destroy();
+                session_unset();
+            } */
 
      echo<<<HTML
-        <div> <H3>Pizza: $field1name1</H3>
-        Bestellungsnummer: $fieldname2 <br> Status: $fieldname4 </div><br>
+        <div> <H3> $fieldname3</H3>
+        Status: $fieldname4 </div><br>
 HTML;
 }
     $this->generatePageFooter();
-    
+    echo "cookies \n";
+    print_r($_COOKIE);
 }
     
     protected function processReceivedData() 
     {
-        if(isset($_SESSION['lastID'])){
-            echo $_SESSION['lastID'];
 
-        }else{
-            echo 'not set';
-        }
     }
 
     public static function main() 

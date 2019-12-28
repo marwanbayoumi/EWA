@@ -1,0 +1,1 @@
+//AJAX request für Kunder

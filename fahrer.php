@@ -90,7 +90,7 @@ class PageTemplate extends Page
         $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
         $value = $value1 = $value2 = " ";
-
+        $pizzas ='';
         while($row = mysqli_fetch_array($result)) {
 
             $fieldname1 = $row["Addresse"];
@@ -116,7 +116,7 @@ class PageTemplate extends Page
                 break;
                 }  
 
-                   
+                $pizzas .= ' '.$fieldname3. ' ';  
 echo <<<HTML
         <div class="addr">
         <span>$fieldname3</span>
@@ -138,6 +138,7 @@ echo<<<HTML
   </form>
   HTML;
 }
+echo $pizzas;
 $this->generatePageFooter();
 }
     /**
