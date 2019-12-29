@@ -30,9 +30,28 @@ require_once './Page.php';
  * @author   Bernhard Kreling, <b.kreling@fbi.h-da.de> 
  * @author   Ralf Hahn, <ralf.hahn@h-da.de> 
  */
+
+class Bestellung{
+    public $BestellungsID;
+    public $PizzaID;
+    public $Status;
+    public $Addresse;
+
+    public function __construct($PizzaID, $Status, $Addresse){
+        // $this->BestellungsID = $BestellungsID;
+        $this->PizzaID = $PizzaID;
+        $this->Status = $Status;
+        $this->Addresse = $Addresse;
+
+    }
+}
+
+
 class Kunde extends Page
 { 
 
+    // public static $array_bestellungen;
+    
     protected function __construct() 
     {
         parent::__construct();
@@ -58,17 +77,25 @@ class Kunde extends Page
     {
         $result = $this->getViewData();
         $this->generatePageHeader('');
-       while($row = mysqli_fetch_array($result)) {
+       while($row=mysqli_fetch_array($result)) {
 
-            $field1name1 = $row["PizzaID"];
+            $fieldname1 = $row["PizzaID"];
             $fieldname2 = $row["fBestellungID"];
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
+
+            $array_bestellungen = array();
+
+        $myBestellungsObject = new Bestellung($fieldname1, $fieldname3, $fieldname4);
+
+        $array_bestellungen[$fieldname2] = $myBestellungsObject;
  
           if($fieldname4 == 'zugestellt'){
-                setcookie('cookie', time() -3600);   
+                setcookie('cookie', time() -3600);
             }
+            print_r($array_bestellungen);
 
+           
      echo<<<HTML
         <div> <H3> $fieldname3</H3>
         Status: $fieldname4 </div><br>
@@ -80,7 +107,11 @@ HTML;
     
     protected function processReceivedData() 
     {
+        header("Content-Type: application/json; charset=UTF-8");
 
+        // $serializedData = json_encode($array_bestellungen);
+
+        // var_dump($serializedData);
     }
 
     public static function main() 
