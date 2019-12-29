@@ -32,16 +32,15 @@ require_once './Page.php';
  */
 
 class Bestellung{
-    public $BestellungsID;
     public $PizzaID;
     public $Status;
-    public $Addresse;
+    public $PizzaName;
 
-    public function __construct($PizzaID, $Status, $Addresse){
+    public function __construct($PizzaID, $Status, $PizzaName){
         // $this->BestellungsID = $BestellungsID;
         $this->PizzaID = $PizzaID;
         $this->Status = $Status;
-        $this->Addresse = $Addresse;
+        $this->PizzaName = $PizzaName;
 
     }
 }
@@ -75,8 +74,11 @@ class Kunde extends Page
     
     protected function generateView() 
     {
+        $array_bestellungen = array();
+        $array_inner = array();
         $result = $this->getViewData();
         $this->generatePageHeader('');
+        $previouse_BestellungsID = 0;
        while($row=mysqli_fetch_array($result)) {
 
             $fieldname1 = $row["PizzaID"];
@@ -84,23 +86,26 @@ class Kunde extends Page
             $fieldname3 = $row["fPizzaName"];
             $fieldname4 = $row["Status"];
 
-            $array_bestellungen = array();
-
-        $myBestellungsObject = new Bestellung($fieldname1, $fieldname3, $fieldname4);
-
-        $array_bestellungen[$fieldname2] = $myBestellungsObject;
+            $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
+            
+            if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
+                array_push($array_inner, $myBestellungsObject);
+                $array_bestellungen[$fieldname2] = $array_inner;
+            }
  
-          if($fieldname4 == 'zugestellt'){
+            $previouse_BestellungsID = $fieldname2;
+    
+            if($fieldname4 == 'zugestellt'){
                 setcookie('cookie', time() -3600);
             }
-            print_r($array_bestellungen);
-
            
      echo<<<HTML
         <div> <H3> $fieldname3</H3>
         Status: $fieldname4 </div><br>
 HTML;
 }
+print_r(($array_bestellungen));
+
     $this->generatePageFooter();
 
 }
