@@ -80,8 +80,8 @@ class Kunde extends Page
         $previouse_BestellungsID = 0;
         $result = $this->getViewData();
         $this->generatePageHeader('');
-        if($result === true){
-
+        
+        if($result != false){
             while($row=mysqli_fetch_array($result)) {
                 
                 $fieldname1 = $row["PizzaID"];

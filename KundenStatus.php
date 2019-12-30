@@ -32,6 +32,7 @@ require_once './Page.php';
  */
 
 class Bestellung{
+
     public $PizzaID;
     public $Status;
     public $PizzaName;
@@ -41,14 +42,13 @@ class Bestellung{
         $this->PizzaID = $PizzaID;
         $this->Status = $Status;
         $this->PizzaName = $PizzaName;
-
     }
 }
 
 
-class KundenStatusnStatusnStatusnStatus extends Page
+class KundenStatusnStatus extends Page
 { 
-    
+
     protected function __construct() 
     {
         parent::__construct();
@@ -61,10 +61,13 @@ class KundenStatusnStatusnStatusnStatus extends Page
 
     protected function getViewData()
     {
-        $cookie = $_COOKIE['lastID'];
-        $query = "SELECT * FROM bestelltepizza WHERE `fBestellungID`='$cookie'";
-
-        return mysqli_query($this->_database, $query); 
+        if(isset($_COOKIE['lastID'])){
+            $cookie = $_COOKIE['lastID'];
+            $query = "SELECT * FROM bestelltepizza WHERE `fBestellungID`='$cookie'";
+            return mysqli_query($this->_database, $query); 
+        }else{
+            return false;
+        }
     }
     
     protected function generateView() 
@@ -74,17 +77,19 @@ class KundenStatusnStatusnStatusnStatus extends Page
         $previouse_BestellungsID = 0;
         $result = $this->getViewData();
         // $this->generatePageHeader('');
-       while($row=mysqli_fetch_array($result)) {
-
-            $fieldname1 = $row["PizzaID"];
-            $fieldname2 = $row["fBestellungID"];
-            $fieldname3 = $row["fPizzaName"];
-            $fieldname4 = $row["Status"];
-
-            $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
-            $serializedData = json_encode($myBestellungsObject);
-            
-            if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
+        
+        if($result != false){
+            while($row=mysqli_fetch_array($result)) {
+                
+                $fieldname1 = $row["PizzaID"];
+                $fieldname2 = $row["fBestellungID"];
+                $fieldname3 = $row["fPizzaName"];
+                $fieldname4 = $row["Status"];
+                
+                $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
+                $serializedData = json_encode($myBestellungsObject);
+                
+                if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
                 array_push($array_inner, $serializedData);
                 // array_push($array_inner, $myBestellungsObject);
                 $array_bestellungen[$fieldname2] = $array_inner;
@@ -93,13 +98,22 @@ class KundenStatusnStatusnStatusnStatus extends Page
             $json_array = json_encode($array_bestellungen);
             
             $previouse_BestellungsID = $fieldname2;
-
+            
             if($fieldname4 == 'zugestellt'){
                 setcookie('cookie', time() -3600);
             }
+            
+/*             echo<<<HTML
+        <div> <H3> $fieldname3</H3>
+        Status: $fieldname4 </div><br>
+HTML;
+print_r(($json_array));*/
 }
-print_r(($json_array));
-    // $this->generatePageFooter();
+}else{
+    echo 'BestellungsID ist nicht verfügbar';
+}
+
+    $this->generatePageFooter();
 }
     
     protected function processReceivedData() 
@@ -114,7 +128,7 @@ print_r(($json_array));
     public static function main() 
     {
         try {
-            $page = new KundenStatusnStatusnStatusnStatus();
+            $page = new KundenStatus();
             $page->processReceivedData();
             $page->generateView();
         }
@@ -125,4 +139,4 @@ print_r(($json_array));
     }
 }
 
-KundenStatusnStatusnStatus::main();
+KundenStatus::main();
