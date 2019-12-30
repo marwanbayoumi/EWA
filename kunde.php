@@ -76,9 +76,9 @@ class Kunde extends Page
     {
         $array_bestellungen = array();
         $array_inner = array();
+        $previouse_BestellungsID = 0;
         $result = $this->getViewData();
         $this->generatePageHeader('');
-        $previouse_BestellungsID = 0;
        while($row=mysqli_fetch_array($result)) {
 
             $fieldname1 = $row["PizzaID"];
@@ -87,14 +87,18 @@ class Kunde extends Page
             $fieldname4 = $row["Status"];
 
             $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
+            $serializedData = json_encode($myBestellungsObject);
             
             if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
-                array_push($array_inner, $myBestellungsObject);
+                array_push($array_inner, $serializedData);
+                // array_push($array_inner, $myBestellungsObject);
                 $array_bestellungen[$fieldname2] = $array_inner;
             }
- 
+            
+            $json_array = json_encode($array_bestellungen);
+            
             $previouse_BestellungsID = $fieldname2;
-    
+
             if($fieldname4 == 'zugestellt'){
                 setcookie('cookie', time() -3600);
             }
@@ -104,10 +108,9 @@ class Kunde extends Page
         Status: $fieldname4 </div><br>
 HTML;
 }
-print_r(($array_bestellungen));
+print_r(($json_array));
 
     $this->generatePageFooter();
-
 }
     
     protected function processReceivedData() 
