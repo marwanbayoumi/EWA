@@ -38,7 +38,6 @@ class Bestellung extends Page
     protected function __construct() 
     {
         parent::__construct();
-        // session_start();
     }
 
     protected function __destruct() 
@@ -78,21 +77,21 @@ HTML;
     } //create form html and send it to Bestellung.php
     echo <<<HTML
     <br>
-    <form action ="#" method="POST"> 
+    <form action="#" method="POST"> 
     
-      Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse" id="address"  placeholder="Addresse"><br/><br/>
+      Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse" id="address"  placeholder="Addresse" required><br/><br/>
 HTML;
 
 $pizza_array = mysqli_fetch_all($this->getViewData());
     for($i=0; $i < mysqli_num_rows($result); $i++){
         for($i=0; $i < count($pizza_array); $i++){
             $name=$pizza_array[$i][1];      
-            echo  $name .': <input type="number" max="5" min="0"  name="pizza['.$name.']"  placeholder="'.$name.'"><br/><br/>';      
+            echo  $name .': <input type="number" max="5" min="0"  name="pizza['.$name.']"  placeholder="'.$name.'" required><br/><br/>';      
         }
       }
     echo <<<HTML
       <input type="button" id="delete" value="Eingabe Löschen">
-         <input type="submit" name="order" value="Bestellen">
+         <input type="submit" id="order" name="order" value="Bestellen">
     </form>
 HTML;
 echo '<script src="randoms.js"></script>';
@@ -101,7 +100,7 @@ echo '<script src="randoms.js"></script>';
 
     protected function processReceivedData() 
     {
-        if( isset($_POST['addresse']) ){ 
+        if( isset($_POST['addresse']) and $_POST['addresse'] !== ''){ 
             $addresse = htmlspecialchars($_POST['addresse']);
             // session_id();
             $timestamp = date("Y-m-d H:i:s");
