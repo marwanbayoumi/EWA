@@ -46,7 +46,7 @@ class Bestellung{
 }
 
 
-class KundenStatusnStatus extends Page
+class KundenStatus extends Page
 { 
 
     protected function __construct() 
@@ -74,6 +74,7 @@ class KundenStatusnStatus extends Page
     {
         $array_bestellungen = array();
         $array_inner = array();
+        $json_array = array();
         $previouse_BestellungsID = 0;
         $result = $this->getViewData();
         // $this->generatePageHeader('');
@@ -109,6 +110,7 @@ class KundenStatusnStatus extends Page
 HTML;
 print_r(($json_array));*/
 }
+return $json_array;
 }else{
     echo 'BestellungsID ist nicht verfügbar';
 }
@@ -120,9 +122,9 @@ print_r(($json_array));*/
     {
         header("Content-Type: application/json; charset=UTF-8");
 
-        // $serializedData = json_encode($array_bestellungen);
+        $serializedData = $this->generateView();
 
-        // var_dump($serializedData);
+        echo $serializedData;
     }
 
     public static function main() 
