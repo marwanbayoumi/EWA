@@ -85,8 +85,9 @@ HTML;
 $pizza_array = mysqli_fetch_all($this->getViewData());
     for($i=0; $i < mysqli_num_rows($result); $i++){
         for($i=0; $i < count($pizza_array); $i++){
-            $name=$pizza_array[$i][1];      
-            echo  $name .': <input type="number" max="5" min="0"  name="pizza['.$name.']"  placeholder="'.$name.'" required><br/><br/>';      
+            $id =$pizza_array[$i][0];
+            $name=$pizza_array[$i][1];    
+            echo  $name .': <input type="number" min="0" max="5" name="pizza['.$name.']" id="pizza-'.$id.'" required><br/><br/>';      
         }
       }
 

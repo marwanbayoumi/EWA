@@ -13,22 +13,7 @@ del.addEventListener("click", function () {
 });
 
 
-/* if(addr.required === false && addr === ''){
-    alert('Bitte geben Sie eine Addresse an.🍕');
-}*/
 
-
-
-// PizzaName as key for obj
-/*  for(item of captions){
-    let temp = item.innerText.split(' ');
-    let property = temp[1];
-    let value = temp[2];
-    let full_item = {};
-    
-    full_item[property] = value;
-    array.push(full_item);
-} */
 
 // PizzaID as key for obj
 for(let i = 0; i < captions.length; i++){
@@ -44,12 +29,17 @@ for(let i = 0; i < captions.length; i++){
 for(test of pizzaImages){
     test.addEventListener("click", function(){
         let element_id = this.id;
+        let input_var = document.getElementById('pizza-'+element_id);
         if(previous_element_id !== 0 && previous_element_id === element_id){
             anzahl[element_id] += 1;
+            input_var.value = anzahl[element_id];
         }else{
             anzahl[element_id] = 1;
+            input_var.value = anzahl[element_id];
         }
         previous_element_id = element_id;
     console.dir(anzahl);
-    })
+    }
+    )
 }
+
