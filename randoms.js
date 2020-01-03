@@ -3,6 +3,9 @@ let addr = document.querySelector('#address');
 let order = document.querySelector('#order');
 let pizzaImages = document.querySelectorAll('.pizzaImage');
 let captions = document.querySelectorAll('figcaption');
+let array = {};
+let anzahl= {};
+let previous_element_id = 0;
 
 
 del.addEventListener("click", function () {
@@ -14,7 +17,6 @@ del.addEventListener("click", function () {
     alert('Bitte geben Sie eine Addresse an.🍕');
 }*/
 
-let array = {};
 
 
 // PizzaName as key for obj
@@ -37,19 +39,11 @@ for(let i = 0; i < captions.length; i++){
 
     full_item[property] = value;
     array[property] = full_item;
-
 }
-// console.dir(full_item);
-// full_item.forEach(e => console.log(e));
-// console.log(array['314']);
-// pizzaImages.forEach(e => e.addEventListener("click", function () { }));
-let anzahl= {};
-let previous_element_id = 0;
+
 for(test of pizzaImages){
     test.addEventListener("click", function(){
         let element_id = this.id;
-        let blah = array[element_id];
-        console.dir(blah);
         if(previous_element_id !== 0 && previous_element_id === element_id){
             anzahl[element_id] += 1;
         }else{
