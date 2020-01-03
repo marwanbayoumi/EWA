@@ -64,65 +64,52 @@ class KundenStatus extends Page
         if(isset($_COOKIE['lastID'])){
             $cookie = $_COOKIE['lastID'];
             $query = "SELECT * FROM bestelltepizza WHERE `fBestellungID`='$cookie'";
-            return mysqli_query($this->_database, $query); 
-        }else{
-            return false;
+            $result = mysqli_query($this->_database, $query);
+            $array_bestellungen = array();
+            $array_inner = array();
+            $json_array = array();
+            $previouse_BestellungsID = 0;
+
+                while($row=mysqli_fetch_array($result)) {
+                        
+                    $fieldname1 = $row["PizzaID"];
+                    $fieldname2 = $row["fBestellungID"];
+                    $fieldname3 = $row["fPizzaName"];
+                    $fieldname4 = $row["Status"];
+                    
+                    $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
+                    $serializedData = json_encode($myBestellungsObject);
+                    
+                    if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
+                    array_push($array_inner, $serializedData);
+                    // array_push($array_inner, $myBestellungsObject);
+                    $array_bestellungen[$fieldname2] = $array_inner;
+                }
+                
+                $json_array = json_encode($array_bestellungen);
+                $previouse_BestellungsID = $fieldname2;
+                
+                if($fieldname4 == 'zugestellt'){
+                    setcookie('cookie', time() -3600);
+                }
         }
+                    return $json_array;
+                }else{
+                    return "BestellungsID nicht vorhanden.";
+                }
     }
     
-    protected function generateView() 
+     protected function generateView() 
     {
-        $array_bestellungen = array();
-        $array_inner = array();
-        $json_array = array();
-        $previouse_BestellungsID = 0;
-        $result = $this->getViewData();
-        // $this->generatePageHeader('');
-        
-        if($result != false){
-            while($row=mysqli_fetch_array($result)) {
-                
-                $fieldname1 = $row["PizzaID"];
-                $fieldname2 = $row["fBestellungID"];
-                $fieldname3 = $row["fPizzaName"];
-                $fieldname4 = $row["Status"];
-                
-                $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
-                $serializedData = json_encode($myBestellungsObject);
-                
-                if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
-                array_push($array_inner, $serializedData);
-                // array_push($array_inner, $myBestellungsObject);
-                $array_bestellungen[$fieldname2] = $array_inner;
-            }
-            
-            $json_array = json_encode($array_bestellungen);
-            
-            $previouse_BestellungsID = $fieldname2;
-            
-            if($fieldname4 == 'zugestellt'){
-                setcookie('cookie', time() -3600);
-            }
-            
-/*             echo<<<HTML
-        <div> <H3> $fieldname3</H3>
-        Status: $fieldname4 </div><br>
-HTML;
-print_r(($json_array));*/
-}
-return $json_array;
-}else{
-    echo 'BestellungsID ist nicht verfügbar';
-}
-
-    $this->generatePageFooter();
-}
+//     $this->generatePageHeader('');        
+//  $this->generatePageFooter();
+} 
     
     protected function processReceivedData() 
     {
         header("Content-Type: application/json; charset=UTF-8");
 
-        $serializedData = $this->generateView();
+        $serializedData = $this->getViewData();
 
         echo $serializedData;
     }

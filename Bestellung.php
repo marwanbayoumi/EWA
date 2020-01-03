@@ -66,10 +66,10 @@ class Bestellung extends Page
          <div >     
             <figure> 
 HTML;
-          echo  '<img class="pizzaImage" src="'.$field3name.'"> <br/>';
+          echo  '<img class="pizzaImage" id="'.$field1name.'" src="'.$field3name.'"> <br/>';
             echo <<<HTML
-            <figcaption> $field2name</figcaption> <br/>
-             $field4name €
+            <figcaption> $field2name $field4name €</figcaption> <br/>
+             <!-- <span class="price">$field4name</span> € -->
             </figure>
             <br/>
               </div >
@@ -89,10 +89,13 @@ $pizza_array = mysqli_fetch_all($this->getViewData());
             echo  $name .': <input type="number" max="5" min="0"  name="pizza['.$name.']"  placeholder="'.$name.'" required><br/><br/>';      
         }
       }
+
     echo <<<HTML
+    <span>Summe: </span> <br> <br>
       <input type="button" id="delete" value="Eingabe Löschen">
          <input type="submit" id="order" name="order" value="Bestellen">
     </form>
+
 HTML;
 echo '<script src="randoms.js"></script>';
      $this->generatePageFooter();
@@ -109,6 +112,7 @@ echo '<script src="randoms.js"></script>';
             $lastID = $this->_database->insert_id; //get last inserted key 
             setcookie('lastID',  $lastID, time() + 3600 , "/"); 
             // echo $lastID;
+            //if $_POST isset then do following if not then see if pizzas have been clicked 
             foreach ($_POST['pizza'] as $name => $anzahl){
                 // echo $name . $anzahl;
                 for($i = 0; $i < $anzahl; $i++){
