@@ -77,6 +77,7 @@ HTML;
     } //create form html and send it to Bestellung.php
     echo <<<HTML
     <br>
+    <div>
     <form action="#" method="POST"> 
     
       Bitte geben Sie Ihre Addresse ein: <input type="text"  name="addresse" id="address"  placeholder="Addresse" required><br/><br/>
@@ -87,7 +88,7 @@ $pizza_array = mysqli_fetch_all($this->getViewData());
         for($i=0; $i < count($pizza_array); $i++){
             $id =$pizza_array[$i][0];
             $name=$pizza_array[$i][1];    
-            echo  $name .': <input type="number" min="0" max="5" name="pizza['.$name.']" id="pizza-'.$id.'" required><br/><br/>';      
+            echo  $name .': <input type="number" min="0" max="5" name="pizza['.$name.']" id="pizza-'.$id.'" required value=0><br/><br/>';      
         }
       }
 
@@ -96,6 +97,7 @@ $pizza_array = mysqli_fetch_all($this->getViewData());
       <input type="button" id="delete" value="Eingabe Löschen">
          <input type="submit" id="order" name="order" value="Bestellen">
     </form>
+    </div>
 
 HTML;
 echo '<script src="randoms.js"></script>';
