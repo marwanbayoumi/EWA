@@ -110,7 +110,6 @@ class Kunde extends Page
         <div> <H3> $fieldname3</H3>
         Status: $fieldname4 </div><br>
 HTML;
-print_r(($json_array));
 }
 }else{
     echo 'BestellungsID ist nicht verfügbar';
