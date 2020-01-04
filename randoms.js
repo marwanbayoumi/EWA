@@ -5,7 +5,6 @@ let pizzaImages = document.querySelectorAll('.pizzaImage');
 let captions = document.querySelectorAll('figcaption');
 let pizza_list = {};
 let anzahl = {};
-let previous_element_id = 0;
 
 
 del.addEventListener("click", function () {
