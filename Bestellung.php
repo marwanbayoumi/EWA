@@ -93,7 +93,7 @@ $pizza_array = mysqli_fetch_all($this->getViewData());
       }
 
     echo <<<HTML
-    <span>Summe: 0 €</span> <br> <br>
+    <span>Summe: <span id="sum" >0</span> €</span> <br> <br>
       <input type="button" id="delete" value="Eingabe Löschen">
          <input type="submit" id="order" name="order" value="Bestellen">
     </form>
