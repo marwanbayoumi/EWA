@@ -100,7 +100,7 @@ $pizza_array = mysqli_fetch_all($this->getViewData());
     </div>
 
 HTML;
-echo '<script src="randoms.js"></script>';
+echo '<script src="js/randoms.js"></script>';
      $this->generatePageFooter();
     }
 

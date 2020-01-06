@@ -99,7 +99,7 @@ HTML;
     echo 'BestellungsID ist nicht verfügbar';
 }
                 echo<<<HTML
-                <script src="AJAX_Kunde.js"></script>
+                <script src="js/AJAX_Kunde.js"></script>
         HTML;
 
     $this->generatePageFooter();
