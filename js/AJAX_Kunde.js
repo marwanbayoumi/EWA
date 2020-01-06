@@ -21,4 +21,4 @@ setInterval(function AJAX_PLS() {
     }
     xmlhttp.open("GET", "KundenStatus.php", true);
     xmlhttp.send();
-}, 3000);
+}, 2000);
