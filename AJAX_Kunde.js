@@ -21,5 +21,4 @@ setInterval(function AJAX_PLS() {
     }
     xmlhttp.open("GET", "KundenStatus.php", true);
     xmlhttp.send();
-    // alert('zebi 3aleko');
 }, 3000);
