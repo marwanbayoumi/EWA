@@ -3,7 +3,7 @@ let inputs = document.querySelectorAll('[id^="pizza-"]');
 let order = document.querySelector('#order');
 let pizzaImages = document.querySelectorAll('.pizzaImage');
 let captions = document.querySelectorAll('figcaption');
-var pizza_list = {};
+let pizza_list = {};
 let anzahl = {};
 
 
@@ -19,7 +19,7 @@ for (let i = 0; i < captions.length; i++) {
     let temp = captions[i].innerText.split(' ');
     let property_id = pizzaImages[i].id;
     let value = temp[2];
-    var pizza = {};
+    let pizza = {};
 
     pizza[property_id] = value; //{pizzaID: pizzaPrice}
     pizza_list[property_id] = pizza; // list of pizzas
@@ -32,7 +32,6 @@ for (test of pizzaImages) {
         let th = parseFloat(document.querySelector('#sum').innerText);
         let element_id = this.id;
         let input_var = document.getElementById('pizza-' + element_id);
-    
         if (input_var.value !== 0 ) {
             anzahl[element_id] = parseInt(input_var.value);
             anzahl[element_id] += 1;

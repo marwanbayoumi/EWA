@@ -101,7 +101,8 @@ class KundenStatus extends Page
     
      protected function generateView() 
     {
-//     $this->generatePageHeader('');        
+//     $this->generatePageHeader(''); 
+header("Refresh:5");
 //  $this->generatePageFooter();
 } 
     
@@ -112,6 +113,7 @@ class KundenStatus extends Page
         $serializedData = $this->getViewData();
 
         echo $serializedData;
+
     }
 
     public static function main() 

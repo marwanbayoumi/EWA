@@ -78,9 +78,9 @@ class Kunde extends Page
         $array_bestellungen = array();
         $array_inner = array();
         $previouse_BestellungsID = 0;
+        $BestellungsID;
         $result = $this->getViewData();
         $this->generatePageHeader('');
-        
         if($result != false){
             while($row=mysqli_fetch_array($result)) {
                 
@@ -89,31 +89,18 @@ class Kunde extends Page
                 $fieldname3 = $row["fPizzaName"];
                 $fieldname4 = $row["Status"];
                 
-                $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
-                $serializedData = json_encode($myBestellungsObject);
-                
-                if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
-                array_push($array_inner, $serializedData);
-                // array_push($array_inner, $myBestellungsObject);
-                $array_bestellungen[$fieldname2] = $array_inner;
-            }
-            
-            $json_array = json_encode($array_bestellungen);
-            
-            $previouse_BestellungsID = $fieldname2;
-            
-            if($fieldname4 == 'zugestellt'){
-                setcookie('cookie', time() -3600);
-            }
-            
-            echo<<<HTML
+                $BestellungsID = $fieldname2;
+                echo<<<HTML
         <div> <H3> $fieldname3</H3>
-        Status: $fieldname4 </div><br>
+        <span> Status: <span id="$fieldname1" class="status" data-bestellungID='$fieldname2'>$fieldname4 </span></span></div><br>
 HTML;
 }
 }else{
     echo 'BestellungsID ist nicht verfügbar';
 }
+                echo<<<HTML
+                <script src="AJAX_Kunde.js"></script>
+        HTML;
 
     $this->generatePageFooter();
 }
