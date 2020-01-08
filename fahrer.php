@@ -71,7 +71,6 @@ class PageTemplate extends Page
     {
         $query = "SELECT bestellung.Addresse, bestellung.BestellungID, bestelltepizza.fPizzaName, bestelltepizza.Status, bestelltepizza.PizzaID
         FROM bestellung INNER JOIN bestelltepizza ON bestellung.BestellungID=bestelltepizza.fBestellungID";
-
         return mysqli_query($this->_database, $query);
     }
     
@@ -91,6 +90,7 @@ class PageTemplate extends Page
         $this->generatePageHeader('to do: change headline');
         $value = $value1 = $value2 = " ";
         $pizzas ='';
+        $counter = 0;
         while($row = mysqli_fetch_array($result)) {
 
             $fieldname1 = $row["Addresse"];
@@ -116,7 +116,11 @@ class PageTemplate extends Page
                 break;
                 }  
 
-                $pizzas .= ' '.$fieldname3. ' ';  
+                $pizzas .= ' '.$fieldname3. ' '; 
+
+                $temp = $counter;
+                $counter++; 
+                
 echo <<<HTML
         <div class="addr">
         <span>$fieldname3</span>
@@ -126,19 +130,18 @@ echo <<<HTML
         <span>BestellungID: $fieldname2</span>
         </div>
         <div class="fahrer-select">
-        <form action="" method="POST">
+       <form action="" method="POST"  id="'.$temp.'">
 HTML;
-echo '<input type="radio" name="status['.$fieldname5.']" value="fertig" '.$value.'/> fertig';
-echo '<input type="radio" name="status['.$fieldname5.']"  value="unterwegs" '.$value1.'/> unterwegs';
-echo '<input type="radio" name="status['.$fieldname5.']"  value="zugestellt" '.$value2.'/>  zugestellt<br><br>';
-echo '<input type="submit" name="refresh" value="Aktualisieren">';
+
+echo '<input type="radio" name="status['.$fieldname5.']" onClick="document.forms['.$temp.'].submit();" value="fertig" '.$value.'/> fertig';
+echo '<input type="radio" name="status['.$fieldname5.']" onClick="document.forms['.$temp.'].submit();"  value="unterwegs" '.$value1.'/> unterwegs';
+echo '<input type="radio" name="status['.$fieldname5.']" onClick="document.forms['.$temp.'].submit();"  value="zugestellt" '.$value2.'/>  zugestellt<br><br>';
   
 echo<<<HTML
   </div><br>
   </form>
   HTML;
 }
-echo $pizzas;
 $this->generatePageFooter();
 }
     /**

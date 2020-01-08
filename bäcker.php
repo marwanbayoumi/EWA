@@ -89,7 +89,7 @@ class PageTemplate extends Page
         $result = $this->getViewData();
         $this->generatePageHeader('to do: change headline');
         $value = $value1 = $value2 = " ";
-        
+        $counter = 0;
         while($row = mysqli_fetch_array($result)) {
 
             $fieldname1 = $row["PizzaID"];
@@ -114,7 +114,8 @@ class PageTemplate extends Page
                     $value = $value1 = " ";
                 break;
                 }  
-
+                $temp = $counter;
+                $counter++; 
      echo<<<HTML
      <form action="#" method="POST">
         <div> <H3>$fieldname3</H3>
@@ -122,10 +123,9 @@ class PageTemplate extends Page
         Status: 
 HTML;
 
-      echo '<input type="radio" name="status['.$fieldname1.']" value="Bestellt" '.$value.'/> bestellt';
-      echo '<input type="radio" name="status['.$fieldname1.']"  value="im Ofen" '.$value1.'/> im Ofen';
-      echo '<input type="radio" name="status['.$fieldname1.']"  value="fertig" '.$value2.'/> fertig <br><br>';
-      echo '<input type="submit" name="refresh" value="Aktualisieren">';
+      echo '<input type="radio" name="status['.$fieldname1.']" onClick="document.forms['.$temp.'].submit();" value="Bestellt" '.$value.'/> bestellt';
+      echo '<input type="radio" name="status['.$fieldname1.']" onClick="document.forms['.$temp.'].submit();"  value="im Ofen" '.$value1.'/> im Ofen';
+      echo '<input type="radio" name="status['.$fieldname1.']" onClick="document.forms['.$temp.'].submit();"  value="fertig" '.$value2.'/> fertig <br><br>';
         
 echo<<<HTML
         </div><br>
