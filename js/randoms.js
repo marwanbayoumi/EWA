@@ -3,6 +3,7 @@ let inputs = document.querySelectorAll('[id^="pizza-"]');
 let order = document.querySelector('#order');
 let pizzaImages = document.querySelectorAll('.pizzaImage');
 let captions = document.querySelectorAll('figcaption');
+let txtarea = document.querySelector('textarea');
 let pizza_list = {};
 let anzahl = {};
 
@@ -32,7 +33,7 @@ for (test of pizzaImages) {
         let th = parseFloat(document.querySelector('#sum').innerText);
         let element_id = this.id;
         let input_var = document.getElementById('pizza-' + element_id);
-        if (input_var.value !== 0 ) {
+        if (input_var.value !== 0) {
             anzahl[element_id] = parseInt(input_var.value);
             anzahl[element_id] += 1;
             input_var.value = anzahl[element_id];
@@ -49,3 +50,6 @@ for (test of pizzaImages) {
     })
 }
 
+
+/* 
+var li = document.createElement('li'); li.appendChild(document.createTextNode("kwayes")); txtarea.appendChild(li) */

@@ -31,6 +31,7 @@ require_once './Page.php';
  * @author   Ralf Hahn, <ralf.hahn@h-da.de> 
  */
 
+ //Pizza Block-Klasse
 class Bestellung{
 
     public $PizzaID;
@@ -95,7 +96,7 @@ class KundenStatus extends Page
         }
                     return $json_array;
                 }else{
-                    return "BestellungsID nicht vorhanden.";
+                    return " ";
                 }
     }
     

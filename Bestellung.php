@@ -66,10 +66,9 @@ class Bestellung extends Page
          <div >     
             <figure> 
 HTML;
-          echo  '<img class="pizzaImage" id="'.$field1name.'" src="'.$field3name.'"> <br/>';
+          echo  '<img class="pizzaImage" id="'.$field1name.'" alt='.$field2name.' src="'.$field3name.' "> <br/>';
             echo <<<HTML
             <figcaption> $field2name $field4name €</figcaption> <br/>
-             <!-- <span class="price">$field4name</span> € -->
             </figure>
             <br/>
               </div >
@@ -84,14 +83,16 @@ HTML;
 HTML;
 
 $pizza_array = mysqli_fetch_all($this->getViewData());
-    for($i=0; $i < mysqli_num_rows($result); $i++){
-        for($i=0; $i < count($pizza_array); $i++){
-            $id =$pizza_array[$i][0];
-            $name=$pizza_array[$i][1];    
-            echo  $name .': <input type="number" min="0" max="5" name="pizza['.$name.']" id="pizza-'.$id.'" required value=0><br/><br/>';      
+for($i=0; $i < mysqli_num_rows($result); $i++){
+    for($i=0; $i < count($pizza_array); $i++){
+        $id =$pizza_array[$i][0];
+        $name=$pizza_array[$i][1];    
+        echo  $name .': <input type="number" min="0" max="5" name="pizza['.$name.']" id="pizza-'.$id.'" required value=0><br/><br/>';      
+        //<select name="myPizzas" multiple>
+            //echo  $name .': <option  name="pizza['.$name.']" id="pizza-'.$id.'" required>   </option><br/><br/>';    
         }
-      }
-
+    }
+    
     echo <<<HTML
     <span>Summe: <span id="sum" >0</span> €</span> <br> <br>
       <input type="button" id="delete" value="Eingabe Löschen">
@@ -108,13 +109,11 @@ echo '<script src="js/randoms.js"></script>';
     {
         if( isset($_POST['addresse']) and $_POST['addresse'] !== ''){ 
             $addresse = htmlspecialchars($_POST['addresse']);
-            // session_id();
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO bestellung (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
             mysqli_query($this->_database, $sql);
             $lastID = $this->_database->insert_id; //get last inserted key 
             setcookie('lastID',  $lastID, time() + 3600 , "/"); 
-            // echo $lastID;
             //if $_POST isset then do following if not then see if pizzas have been clicked 
             foreach ($_POST['pizza'] as $name => $anzahl){
                 // echo $name . $anzahl;

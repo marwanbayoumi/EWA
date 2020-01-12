@@ -116,7 +116,7 @@ class PageTemplate extends Page
                 break;
                 }  
 
-                $pizzas .= ' '.$fieldname3. ' '; 
+                $pizzas .= ' '.$fieldname3.' '; 
 
                 $temp = $counter;
                 $counter++; 
