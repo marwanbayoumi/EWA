@@ -1,3 +1,44 @@
-img{
+.pizzaImage{
+    width: 75%;
+}
 
+.pizzaImage:hover{
+    cursor: pointer;
+}
+
+section.flex{
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+}
+
+figure.flexbox-item{
+    flex: 1;
+}
+
+
+h3:hover{
+    cursor: default;
+}
+
+h3{
+    margin-left: 40px;
+}
+
+.beschreibung{
+    flex: 1;
+    font-size: large;
+    margin-top: 205px;
+    margin-right: 210px;
+}
+
+form{
+    border: 0.75px solid #ccc;
+}
+
+.outer-flex{
+    display: flex;
+    flex-direction: row;
+    border: 1px #ccc solid;
+    width: 1200px;
 }

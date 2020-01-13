@@ -56,25 +56,31 @@ class Bestellung extends Page
     {
         $result = $this->getViewData();
         $this->generatePageHeader('');
+        echo '<section class="flex"> <link rel="stylesheet" href="css/bestellung.css">';
        while($row = mysqli_fetch_array($result)) {
 
             $field1name = $row["PizzaNummer"];
             $field2name = $row["PizzaName"];
             $field3name = $row["Bilddatei"];
             $field4name = $row["Preis"];
+            $field5name = $row["Beschreibung"];
             echo <<<HTML
-         <div >     
-            <figure> 
+            <div class="outer-flex">
+            <figure class="flexbox-item"> 
 HTML;
+        echo '<h3> '.$field2name.' '.$field4name.' €</h3>';
           echo  '<img class="pizzaImage" id="'.$field1name.'" alt='.$field2name.' src="'.$field3name.' "> <br/>';
-            echo <<<HTML
-            <figcaption> $field2name $field4name €</figcaption> <br/>
-            </figure>
+          echo <<<HTML
+        </figure>
+        <div class="beschreibung">     
+                $field5name
+            </div>
+        </div>
             <br/>
-              </div >
 HTML;
     } //create form html and send it to Bestellung.php
     echo <<<HTML
+    </section>
     <br>
     <div>
     <form action="#" method="POST"> 
