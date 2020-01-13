@@ -2,7 +2,7 @@ let del = document.querySelector('#delete');
 let inputs = document.querySelectorAll('[id^="pizza-"]');
 let order = document.querySelector('#order');
 let pizzaImages = document.querySelectorAll('.pizzaImage');
-let captions = document.querySelectorAll('figcaption');
+let captions = document.querySelectorAll('h3');
 let txtarea = document.querySelector('textarea');
 let pizza_list = {};
 let anzahl = {};
@@ -24,11 +24,12 @@ for (let i = 0; i < captions.length; i++) {
 
     pizza[property_id] = value; //{pizzaID: pizzaPrice}
     pizza_list[property_id] = pizza; // list of pizzas
+    console.dir(pizza_list);
 }
 
 
 
-for (test of pizzaImages) {
+for (let test of pizzaImages) {
     test.addEventListener("click", function () {
         let th = parseFloat(document.querySelector('#sum').innerText);
         let element_id = this.id;
@@ -37,6 +38,7 @@ for (test of pizzaImages) {
             anzahl[element_id] = parseInt(input_var.value);
             anzahl[element_id] += 1;
             input_var.value = anzahl[element_id];
+            console.dir(pizza_list);
             th += parseFloat(pizza_list[element_id][element_id]);
             let the = document.querySelector('#sum');
             the.innerText = th.toFixed(2);
