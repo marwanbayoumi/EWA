@@ -53,7 +53,7 @@ abstract class Page
      */
     protected function __construct() 
     {
-        $this->_database =new mysqli($this->host, $this->dbUsername,
+        $this->_database = new mysqli($this->host, $this->dbUsername,
          $this->dbPassword, $this->dbName) or die('unable to create');
     }
     

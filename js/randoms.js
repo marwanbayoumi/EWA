@@ -29,7 +29,7 @@ for (let i = 0; i < captions.length; i++) {
 
 
 
-for (let test of pizzaImages) {
+for (test of pizzaImages) {
     test.addEventListener("click", function () {
         let th = parseFloat(document.querySelector('#sum').innerText);
         let element_id = this.id;

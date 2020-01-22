@@ -66,14 +66,14 @@ class Bestellung extends Page
             $field5name = $row["Beschreibung"];
             echo <<<HTML
             <div class="outer-flex">
-            <figure class="flexbox-item"> 
+            <figure class="flexbox-image"> 
 HTML;
         echo '<h3> '.$field2name.' '.$field4name.' €</h3>';
           echo  '<img class="pizzaImage" id="'.$field1name.'" alt='.$field2name.' src="'.$field3name.' "> <br/>';
           echo <<<HTML
         </figure>
         <div class="beschreibung">     
-                $field5name
+                <span>$field5name</span>
             </div>
         </div>
             <br/>
