@@ -90,9 +90,9 @@ class KundenStatus extends Page
                 $json_array = json_encode($array_bestellungen);
                 $previouse_BestellungsID = $fieldname2;
                 
-                if($fieldname4 == 'zugestellt'){
-                    setcookie('cookie', time() -3600);
-                }
+                // if($fieldname4 == 'zugestellt'){
+                //     setcookie('cookie', time() -3600);
+                // }
         }
                     return $json_array;
                 }else{

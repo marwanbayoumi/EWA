@@ -114,7 +114,7 @@ echo '<script src="js/randoms.js"></script>';
     protected function processReceivedData() 
     {
         if( isset($_POST['addresse']) and $_POST['addresse'] !== ''){ 
-            $addresse = htmlspecialchars($_POST['addresse']);
+            $addresse = real_escape_string($_POST['addresse']);
             $timestamp = date("Y-m-d H:i:s");
             $sql = "INSERT INTO bestellung (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
             mysqli_query($this->_database, $sql);

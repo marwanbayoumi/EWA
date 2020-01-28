@@ -36,9 +36,9 @@ h3:hover{
     justify-content: center;
 }
 
-form{
+/* form{
     border: 0.75px solid #ccc;
-}
+} */
 
 .outer-flex{
     display: flex;
@@ -58,12 +58,3 @@ form{
     }
 }
 
-/* @media only screen and (min-width: 600px){
-    .beschreibung span{
-        visibility: visible;
-        flex:1;
-    }
-    figure.flexbox-image{
-        flex: 1;
-    }
-} */
