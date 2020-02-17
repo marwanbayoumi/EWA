@@ -47,7 +47,7 @@ class Bestellung{
 }
 
 
-class KundenStatus extends Page
+class lol extends Page
 { 
 
     protected function __construct() 
@@ -61,49 +61,37 @@ class KundenStatus extends Page
     }
 
     protected function getViewData()
-    {
-        if(isset($_COOKIE['lastID'])){
-            $cookie = $_COOKIE['lastID'];
-            $query = "SELECT * FROM bestelltepizza WHERE `fBestellungID`='$cookie'";
+    {   
+            $query = "SELECT fpizzaname FROM bestelltepizza";
             $result = mysqli_query($this->_database, $query);
-            $array_bestellungen = array();
-            $array_inner = array();
-            $json_array = array();
-            $previouse_BestellungsID = 0;
-
-                while($row=mysqli_fetch_array($result)) {
-                        
-                    $fieldname1 = $row["PizzaID"];
-                    $fieldname2 = $row["fBestellungID"];
-                    $fieldname3 = $row["fPizzaName"];
-                    $fieldname4 = $row["Status"];
-                    
-                    $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
-                    $serializedData = json_encode($myBestellungsObject);
-                    
-                    if($previouse_BestellungsID == 0 or $previouse_BestellungsID == $fieldname2){
-                    array_push($array_inner, $serializedData);
-                    // array_push($array_inner, $myBestellungsObject);
-                    $array_bestellungen[$fieldname2] = $array_inner;
-                }
-                
-                $json_array = json_encode($array_bestellungen);
-                $previouse_BestellungsID = $fieldname2;
-                
-                // if($fieldname4 == 'zugestellt'){
-                //     setcookie('cookie', time() -3600);
-                // }
-        }
-                    return $json_array;
-                }else{
-                    return " ";
-                }
+            return mysqli_fetch_array($result);
     }
     
      protected function generateView() 
     {
+        $array_bestellungen = array();
+        $array_inner = array();
+        $json_array = array();
+        $previouse_BestellungsID = 0;
+        $result = $this->getViewData();
+        print_r($result);
+/*         foreach ($result as $name => $key) {
+                        
+            $fieldname1 = $row["PizzaID"];
+            $fieldname2 = $row["fBestellungID"];
+            $fieldname3 = $row["fPizzaName"];
+            $fieldname4 = $row["Status"];
+            
+            $myBestellungsObject = new Bestellung($fieldname1, $fieldname4, $fieldname3);
+            $serializedData = json_encode($myBestellungsObject);
+            
+           array_push($array_bestellungen,$serializedData); 
+        
+        $json_array = json_encode($array_bestellungen);
+}
+            return $json_array; */
 //     $this->generatePageHeader(''); 
-header("Refresh:5");
+// header("Refresh:5");
 //  $this->generatePageFooter();
 } 
     
@@ -120,7 +108,7 @@ header("Refresh:5");
     public static function main() 
     {
         try {
-            $page = new KundenStatus();
+            $page = new lol();
             $page->processReceivedData();
             $page->generateView();
         }
@@ -131,5 +119,5 @@ header("Refresh:5");
     }
 }
 
-KundenStatus::main();
+lol::main();
 ?>

@@ -198,4 +198,4 @@ PageTemplate::main();
 // Not specifying the closing ? >  helps to prevent accidents 
 // like additional whitespace which will cause session 
 // initialization to fail ("headers already sent"). 
-//? >
+?>

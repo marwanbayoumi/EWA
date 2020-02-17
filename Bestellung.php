@@ -58,7 +58,7 @@ class Bestellung extends Page
         $this->generatePageHeader('');
         echo '<section class="flex"> <link rel="stylesheet" href="css/bestellung.css">';
        while($row = mysqli_fetch_array($result)) {
-
+           
             $field1name = $row["PizzaNummer"];
             $field2name = $row["PizzaName"];
             $field3name = $row["Bilddatei"];
@@ -116,6 +116,7 @@ echo '<script src="js/randoms.js"></script>';
         if( isset($_POST['addresse']) and $_POST['addresse'] !== ''){ 
             $addresse = $_POST['addresse'];
             $timestamp = date("Y-m-d H:i:s");
+            mysqli_real_escape_string($this->_database,$addresse);
             $sql = "INSERT INTO bestellung (`BestellungID`,`Addresse`, `Bestellzeitpunkt`) VALUES ('','$addresse','$timestamp')";
             mysqli_query($this->_database, $sql);
             $lastID = $this->_database->insert_id; //get last inserted key 
