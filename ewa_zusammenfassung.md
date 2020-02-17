@@ -172,7 +172,20 @@ if($val === false || is_null($val)){
     throw new Exception('Could not encode JSON');
 }
 ```
-
+Starting sessions & setting cookies in PHP
+```php
+#at the start of the php script write
+session_start();
+$_SESSION["key"]="bla";
+#delete all the data from the session array
+session_unset(); 
+#destroy the session
+session_destroy();
+#same for cookies
+setcookies("key","value");
+#kill the cookie
+setcookies("key","value",0);
+```
 #### Forms
 - GET : formulardaten werden an URL gehangen (bookmarkable)
 - GET : ist idempotent doesnt change content
