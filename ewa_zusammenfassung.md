@@ -182,9 +182,9 @@ session_unset();
 #destroy the session
 session_destroy();
 #same for cookies
-setcookies("key","value");
+setcookie("key","value");
 #kill the cookie
-setcookies("key","value",0);
+setcookie("key","value",0);
 ```
 #### Forms
 - GET : formulardaten werden an URL gehangen (bookmarkable)
