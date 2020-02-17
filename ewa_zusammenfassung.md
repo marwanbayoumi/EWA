@@ -121,7 +121,7 @@ literal notation: reference value
 constructor function: reference type
 
 `in` operator überprüft ob property im obj enthalten ist.
-`instance of` ob ein obj zu einem refernce type gehört.
+`instanceof` ob ein obj zu einem refernce type gehört.
 
 prototypes definiert eine reihe von funktionen die von objekten geerbt werden. wie eine abstrakte klasse im Objekt Orientiertem Programmieren.
 
