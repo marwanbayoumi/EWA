@@ -68,7 +68,7 @@ for (var key in p) {
 for of vs for in 
 for of get you the value where as for in gets you the index 
 
-Nodemanipulation
+Node manipulation
 ```javascript
 //how to move shit up with JS
         let opts = document.querySelectorAll('option');
